@@ -2,14 +2,80 @@
 <html>
   <head>
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/aframe-blink-controls/dist/aframe-blink-controls.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.misc.min.js"></script>
+    <script src="https://unpkg.com/super-hands@^3.0.3/dist/super-hands.min.js"></script>
+
+    <title>V2XR Lab Apps</title>
   </head>
   <body>
-    <a-scene>
-      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-      <a-sky color="#ECECEC"></a-sky>
+    <a-scene renderer="antialias: true">
+      <a-entity id="player">
+        <!-- camera -->
+        <a-entity id="camera" camera wasd-controls look-controls></a-entity>
+        <!-- hand controls -->
+        <a-entity
+          id="left-hand"
+          oculus-touch-controls="hand: left"
+          blink-controls
+        ></a-entity>
+        <a-entity
+          id="right-hand"
+          oculus-touch-controls="hand: right"
+        ></a-entity>
+
+        <a-entity
+          id="leftHand"
+          sphere-collider="objects: a-box"
+          super-hands
+          hand-controls="hand: left;"
+        ></a-entity>
+        <a-entity
+          id="rightHand"
+          sphere-collider="objects: a-box"
+          super-hands
+          hand-controls="hand: right;"
+        ></a-entity>
+      </a-entity>
+      <!-- 
+      <a-entity
+        laser-controls="hand: right"
+        raycaster="lineColor: red; lineOpacity: 1; far: 10"
+      ></a-entity>
+      <a-entity
+        laser-controls="hand: left"
+        raycaster="lineColor: red; lineOpacity: 1; far: 10"
+      ></a-entity> -->
+
+      <!-- Floor -->
+      <a-plane
+        color="#CCC"
+        height="20"
+        width="20"
+        position="0 0 0"
+        rotation="-90 0 0"
+      ></a-plane>
+      <a-box
+        position="0 0 -0.5"
+        hoverable
+        grabbable
+        stretchable
+        draggable
+        droppable
+        rotation="0 45 0"
+        color="#4CC3D9"
+      ></a-box>
+      <a-sphere position="0 2 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+      <a-cylinder
+        position="1 0.75 -3"
+        radius="0.5"
+        height="1.5"
+        color="#FFC65D"
+      ></a-cylinder>
+
+      <a-text value="Hello WebXR" positioan="0 1 -2.5" color="red"></a-text>
     </a-scene>
   </body>
 </html>
