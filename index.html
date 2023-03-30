@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- add favicon below -->
+    <link rel="icon" href="fav.ico" />
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/aframe-blink-controls/dist/aframe-blink-controls.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/aframe-blink-controls/dist/aframe-blink-controls.min.js"></script> -->
 
-    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.misc.min.js"></script>
-    <script src="https://unpkg.com/super-hands@^3.0.3/dist/super-hands.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.misc.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/super-hands@^3.0.3/dist/super-hands.min.js"></script> -->
+    <!-- <script src="./libs/aframe-gui.min.js"></script> -->
 
     <title>V2XR Lab Apps</title>
   </head>
   <body>
     <a-scene renderer="antialias: true">
+      <a-assets>
+        <img id="homeThumbnail" src="assets/imgs/portal.webp" />
+      </a-assets>
+
       <a-entity id="player">
         <!-- camera -->
         <a-entity id="camera" camera wasd-controls look-controls>
           <a-circle
-            color="#FF0000"
+            color="#0000FF"
             opacity="0.5"
             radius="0.2"
             position="0 0 -1"
@@ -42,15 +49,6 @@
         laser-controls="hand: left"
         raycaster="lineColor: red; lineOpacity: 1; far: 10"
       ></a-entity> -->
-
-      <!-- Floor -->
-      <a-plane
-        color="#CCC"
-        height="20"
-        width="20"
-        position="0 0 0"
-        rotation="-90 0 0"
-      ></a-plane>
       <a-box
         position="0 0 -0.5"
         hoverable
@@ -68,8 +66,12 @@
         height="1.5"
         color="#FFC65D"
       ></a-cylinder>
-
-      <a-text value="Hello WebXR" positioan="0 1 -2.5" color="red"></a-text>
+      <a-link
+        href="playground/ar_catch.html"
+        title="AR Catch Game"
+        image="#homeThumbnail"
+        position="0 1.6 -3"
+      ></a-link>
     </a-scene>
   </body>
 </html>
