@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>WebVR Game</title>
+    <link rel="icon" href="/fav.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+<!--     <script src="/libs/aframe-gui.js"></script> -->
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/gh/MozillaReality/ammo.js@8bbc0ea/builds/ammo.wasm.js"></script>
+    <script src="/libs/aframe-physics-system.min.js"></script>
+
+  </head>
+  <body>
+    <a-scene
+      physics="driver: ammo; debug: false; gravity: -1.8; debugDrawMode: 0"
+    >
+      <a-assets>
+        <a-mixin
+          id="block"
+          ammo-body
+          geometry="primitive: cylinder; radius: 0.1; height: 1.5"
+          material="color: red"
+        >
+        </a-mixin>
+      </a-assets>
+
+      <!-- Camera and Hand -->
+      <a-entity id="cameraRig" position="0 1.5 0">
+        <a-entity id="camera" camera look-controls>
+          <a-entity oculus-touch-controls="hand: left" laser-controls="hand: left"></a-entity>
+          <a-entity oculus-touch-controls="hand: right" laser-controls="hand: right"></a-entity>
+        </a-entity>
+      </a-entity>
+
+      <!-- Ground Plane -->
+      <a-entity
+        position="0 -0.5 0"
+        geometry="primitive: plane; width: 100; height: 100"
+        material="color: #888"
+        static-body
+      ></a-entity>
+<a-entity
+        id="startButton"
+        geometry="primitive: box; width: 2; height: 0.5; depth: 0.2"
+        material="color: #4CC3D9"
+        position="0 2 -2"
+        text="value: Start Game; align: center"
+        event-set__1="_event: mousedown; scale: 1 1 1"
+        event-set__2="_event: mouseup; scale: 1.2 1.2 1"
+        event-set__3="_event: click; spawnBlock"
+      ></a-entity>
+
+
+
+      <!-- Block Spawner -->
+      <a-entity id="blockSpawner" position="0 10 0">
+      </a-entity>
+
+      <!-- Explosion Particle Effect -->
+      <!-- <a-entity mixin="explosion"></a-entity> -->
+
+      <script>
+        // Variables for scoring
+        var score = 0;
+        var scoreText = document.querySelector("#score");
+
+        // random position -1 to 1 generator
+        function randomPosition(a, b) {
+            return Math.random() * (b - a) + a
+        }
+
+        // random color generator
+        function randomColor() {
+          return "#" + Math.floor(Math.random() * 16777215).toString(16);
+        }
+
+
+        // 生成新的 block
+        function spawnBlock() {
+          var newBlock = document.createElement("a-entity");
+          newBlock.setAttribute("mixin", "block");
+          newBlock.setAttribute("position", {
+            x: randomPosition(-5, 5),
+            y: 0,
+            z: 0,
+          });
+          newBlock.setAttribute("material", "color", randomColor());
+          document.querySelector("#blockSpawner").appendChild(newBlock);
+        }
+
+        // 每隔 500ms 执行一次       
+        // setInterval(spawnBlock, 500);
+
+
+        // Event Listener for game over
+        /*
+        var gameOver = false;
+        setInterval(function () {
+          if (block.getAttribute("position").y < -5 && !gameOver) {
+            alert("Game Over! Your score is " + score);
+            gameOver = true;
+          }
+        }, 500);
+        */
+      </script>
+    </a-scene>
+  </body>
+</html>
