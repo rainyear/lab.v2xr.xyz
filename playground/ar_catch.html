@@ -17,13 +17,15 @@
 
   </head>
   <body>
+
+<!--     physics="driver: ammo; debug: false; gravity: -1.8; debugDrawMode: 0" -->
     <a-scene
-      physics="driver: ammo; debug: false; gravity: -1.8; debugDrawMode: 0"
+      cursor="rayOrigin: mouse; fuse: false" 
+      raycaster="objects: .raycastable"
     >
       <a-assets>
         <a-mixin
           id="block"
-          ammo-body
           geometry="primitive: cylinder; radius: 0.1; height: 1.5"
           material="color: red"
         >
@@ -32,28 +34,29 @@
 
       <!-- Camera and Hand -->
       <a-entity id="cameraRig" position="0 1.5 0">
-        <a-entity id="camera" camera look-controls>
-          <a-entity oculus-touch-controls="hand: left" laser-controls="hand: left"></a-entity>
-          <a-entity oculus-touch-controls="hand: right" laser-controls="hand: right"></a-entity>
+        <a-entity id="camera" camera look-controls="magicWindowTrackingEnabled: false; touchEnabled: false; mouseEnabled: false">
+<!--           <a-entity oculus-touch-controls="hand: left" laser-controls="hand: left"></a-entity> -->
+<!--           <a-entity oculus-touch-controls="hand: right" laser-controls="hand: right"></a-entity> -->
         </a-entity>
       </a-entity>
 
       <!-- Ground Plane -->
-      <a-entity
+      
+<!--       <a-entity
         position="0 -0.5 0"
         geometry="primitive: plane; width: 100; height: 100"
-        material="color: #888"
+        material="color: green"
         static-body
-      ></a-entity>
-<a-entity
+      ></a-entity> -->
+      <a-entity
         id="startButton"
         geometry="primitive: box; width: 2; height: 0.5; depth: 0.2"
         material="color: #4CC3D9"
-        position="0 2 -2"
+        position="0 1.7 -2"
         text="value: Start Game; align: center"
-        event-set__1="_event: mousedown; scale: 1 1 1"
-        event-set__2="_event: mouseup; scale: 1.2 1.2 1"
-        event-set__3="_event: click; spawnBlock"
+        animation__scale="startEvents: mouseleave; property: scale; to: 1 1 1"
+        animation_scale_down="startEvents: mouseenter; property: scale; to: 1.2 1.2 1"
+        class="raycastable"
       ></a-entity>
 
 
@@ -83,6 +86,7 @@
 
         // 生成新的 block
         function spawnBlock() {
+          console.log("Spawn new block");
           var newBlock = document.createElement("a-entity");
           newBlock.setAttribute("mixin", "block");
           newBlock.setAttribute("position", {
